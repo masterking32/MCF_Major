@@ -2,8 +2,10 @@
 # Date: 2024
 # Github: https://github.com/masterking32
 # Telegram: https://t.me/MasterCryptoFarmBot
+import random
 import sys
 import os
+import time
 
 from .core.HttpRequest import HttpRequest
 from .core.Auth import Auth
@@ -42,11 +44,6 @@ class FarmBot:
     async def run(self):
         self.log.info(
             f"<cyan>{self.account_name}</cyan><g> | 🤖 Start farming Major ...</g>"
-        )
-
-        self.web_app_query = self.web_app_query.replace(
-            "%2522allows_write_to_pm",
-            "%2522is_premium%2522%253Atrue%252C%2522allows_write_to_pm",
         )
 
         self.http = HttpRequest(
@@ -161,3 +158,36 @@ class FarmBot:
             f"<cyan>{self.account_name}</cyan><g> | 📋 Getting daily tasks ...</g>"
         )
         daily_tasks = tasks.get_tasks(is_daily=True)
+
+        self.log.info(f"<cyan>{self.account_name}</cyan><g> | 👥 Getting squad ...</g>")
+        top_squads = squad.get_top_squads()
+
+        visit = user_visit.get_visit()
+        if visit is not None:
+            is_increased = visit.get("is_increased", False)
+            is_allowed = visit.get("is_allowed", False)
+            streak = visit.get("streak", 0) + 1
+
+            if is_increased and is_allowed:
+                self.log.info(
+                    f"<cyan>{self.account_name}</cyan><g> | 📅 Streak increased to <c>{streak}</c>!</g>"
+                )
+            elif is_allowed == False and self.tgAccount is not None:
+                await self.tgAccount.joinChat("starsmajor")
+                await time.sleep(5)
+                finish_task = tasks.check_task(15027)
+                if finish_task is not None:
+                    self.log.info(
+                        f"<cyan>{self.account_name}</cyan><g> | 🎉 Task <c>Join Major Channel</c> finished!</g>"
+                    )
+
+        user = users.get_user(user_id)
+
+        if squad_id is None and top_squads is not None:
+            random_squad = random.choice(top_squads[:4])
+            squad_id = random_squad.get("id", None)
+            squad_name = random_squad.get("name", None)
+            self.log.info(
+                f"<cyan>{self.account_name}</cyan><g> | 🏆 Joining squad <c>{squad_name}</c> ...</g>"
+            )
+            squad.join_squad(squad_id)

@@ -4,6 +4,9 @@
 # Telegram: https://t.me/MasterCryptoFarmBot
 
 
+import json
+
+
 class Tasks:
     def __init__(self, log, httpRequest, account_name):
         self.log = log
@@ -31,5 +34,29 @@ class Tasks:
             return response
         except Exception as e:
             self.log.error(f"<r>⭕ <c>{self.account_name}</c> failed to get tasks!</r>")
+            # self.log.error(f"<r>{e}</r>")
+            return None
+
+    def check_task(self, task_id):
+        try:
+            response = self.http.post(
+                url=f"/api/tasks/",
+                display_errors=False,
+                send_option_request=False,
+                data=json.dumps({"task_id": task_id}),
+                valid_response_code=201,
+            )
+
+            if response is None:
+                self.log.error(
+                    f"<r>⭕ <c>{self.account_name}</c> failed to check task!</r>"
+                )
+                return None
+
+            return response
+        except Exception as e:
+            self.log.error(
+                f"<r>⭕ <c>{self.account_name}</c> failed to check task!</r>"
+            )
             # self.log.error(f"<r>{e}</r>")
             return None
