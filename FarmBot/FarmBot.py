@@ -188,8 +188,9 @@ class FarmBot:
                         f"<cyan>{self.account_name}</cyan><g> | 📅 Streak increased to <c>{streak}</c>!</g>"
                     )
                 elif is_allowed == False and self.tgAccount is not None:
-                    await self.tgAccount.joinChat("starsmajor")
-                    await time.sleep(5)
+                    if getConfig("join_channels", False):
+                        await self.tgAccount.joinChat("starsmajor")
+                        await time.sleep(5)
                     finish_task = tasks.check_task(15027)
                     if finish_task is not None:
                         self.log.info(
