@@ -194,8 +194,12 @@ class FarmBot:
             )
             squad.join_squad(squad_id)
 
+        license_key = self.bot_globals.get("license", None)
         games = Games(
-            log=self.log, httpRequest=self.http, account_name=self.account_name
+            log=self.log,
+            httpRequest=self.http,
+            account_name=self.account_name,
+            license_key=license_key,
         )
 
         self.log.info(
@@ -210,3 +214,6 @@ class FarmBot:
 
         if getConfig("play_swipe_coin", True):
             games.start_swipe_coin()
+
+        if getConfig("play_durov", True):
+            games.start_durov()

@@ -21,6 +21,13 @@
     "description": "Play the Swipe Coin game?"
   },
   {
+    "key": "play_durov",
+    "name": "Play Durov Game",
+    "type": "checkbox",
+    "default_value": "on",
+    "description": "Play the Durov game?"
+  },
+  {
     "key": "check_interval",
     "name": "Check interval (seconds)",
     "type": "number",
