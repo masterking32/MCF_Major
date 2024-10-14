@@ -28,6 +28,27 @@
     "description": "Play the Durov game?"
   },
   {
+    "key": "auto_finish_tasks",
+    "name": "Auto finish tasks",
+    "type": "checkbox",
+    "default_value": "on",
+    "description": "Automatically finish tasks when they are available?"
+  },
+  {
+    "key": "join_channels",
+    "name": "Join Channels",
+    "type": "checkbox",
+    "default_value": "off",
+    "description": "Automatically join channels to finish tasks?"
+  },
+  {
+    "key": "start_bots",
+    "name": "Start Bots Tasks",
+    "type": "checkbox",
+    "default_value": "on",
+    "description": "Automatically start to finish tasks?"
+  },
+  {
     "key": "check_interval",
     "name": "Check interval (seconds)",
     "type": "number",

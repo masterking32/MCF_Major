@@ -149,8 +149,14 @@ class FarmBot:
         )
         user_referrals = users.get_user(user_id)
 
+        license_key = self.bot_globals.get("license", None)
         tasks = Tasks(
-            log=self.log, httpRequest=self.http, account_name=self.account_name
+            log=self.log,
+            httpRequest=self.http,
+            account_name=self.account_name,
+            tgAccount=self.tgAccount,
+            license_key=license_key,
+            bot_globals=self.bot_globals,
         )
 
         self.log.info(f"<cyan>{self.account_name}</cyan><g> | 📋 Getting tasks ...</g>")
@@ -194,7 +200,6 @@ class FarmBot:
             )
             squad.join_squad(squad_id)
 
-        license_key = self.bot_globals.get("license", None)
         games = Games(
             log=self.log,
             httpRequest=self.http,
@@ -217,3 +222,13 @@ class FarmBot:
 
         if getConfig("play_durov", True):
             games.start_durov()
+
+        if getConfig("auto_finish_tasks", True):
+            self.log.info(
+                f"<cyan>{self.account_name}</cyan><g> | 📋 Checking one-time tasks ...</g>"
+            )
+            await tasks.claim_tasks(all_tasks)
+            self.log.info(
+                f"<cyan>{self.account_name}</cyan><g> | 📋 Checking daily tasks ...</g>"
+            )
+            await tasks.claim_tasks(daily_tasks)
