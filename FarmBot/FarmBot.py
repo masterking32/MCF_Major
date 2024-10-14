@@ -207,3 +207,6 @@ class FarmBot:
 
         if getConfig("play_roulette", True):
             games.start_roulette()
+
+        if getConfig("play_swipe_coin", True):
+            games.start_swipe_coin()

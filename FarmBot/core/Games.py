@@ -38,7 +38,7 @@ class Games:
             time.sleep(60)
             self.finish_bonus(coin)
             self.log.info(
-                f"<g>🎁 <c>{self.account_name}</c> finished Hold coin and got <c>{coin}</c> coins!</g>"
+                f"<g>🎁 <c>{self.account_name}</c> finished Hold coin and got <c>{coin}⭐</c> coins!</g>"
             )
 
         except Exception as e:
@@ -76,6 +76,82 @@ class Games:
             )
             # self.log.error(f"<r>{e}</r>")
             return None
+
+    def start_swipe_coin(self):
+        try:
+            swipe = self.get_swipe()
+            if swipe is None:
+                self.log.info(
+                    f"<g>✅ Game <c>{self.account_name}</c> already finished Swipe coin!</g>"
+                )
+                return
+
+            if swipe.get("detail") is not None:
+                self.log.info(
+                    f"<g>🪙 <c>{self.account_name}</c> already finished Swipe coin!</g>"
+                )
+                return
+
+            self.log.info(
+                f"<g>🪙 <c>{self.account_name}</c> is starting Swipe coin, waiting for 60 seconds...</g>"
+            )
+
+            time.sleep(60)
+            coins = random.randint(2300, 2800)
+            self.start_swipe_request(coins)
+
+            self.log.info(
+                f"<g>🎁 <c>{self.account_name}</c> finished Swipe coin and received <c>{coins}⭐</c> coins!</g>"
+            )
+
+        except Exception as e:
+            self.log.error(
+                f"<r>⭕ <c>{self.account_name}</c> failed to start Swipe coin!</r>"
+            )
+            # self.log.error(f"<r>{e}</r>")
+            return None
+
+    def get_swipe(self):
+        try:
+            response = self.http.get(
+                url="/api/swipe_coin/",
+                display_errors=False,
+                send_option_request=False,
+            )
+
+            if response is None:
+                return None
+
+            return response
+        except Exception as e:
+            self.log.error(
+                f"<r>⭕ <c>{self.account_name}</c> failed to get Swipe coin!</r>"
+            )
+            # self.log.error(f"<r>{e}</r>")
+            return None
+
+    def start_swipe_request(self, coins):
+        try:
+            response = self.http.post(
+                url="/api/swipe_coin/",
+                display_errors=False,
+                send_option_request=False,
+                valid_response_code=201,
+                data=json.dumps({"coins": coins}),
+            )
+
+            if response is None:
+                self.log.error(
+                    f"<r>⭕ <c>{self.account_name}</c> failed to start Swipe coin!</r>"
+                )
+                return None
+
+            return response
+        except Exception as e:
+            self.log.error(
+                f"<r>⭕ <c>{self.account_name}</c> failed to start Swipe coin!</r>"
+            )
+            # self.log.error(f"<r>{e}</r>")
 
     def get_roulette(self):
         try:
