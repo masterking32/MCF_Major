@@ -54,7 +54,7 @@ class Tasks:
                     )
                     self.check_task(task_id)
                 elif task_type == "subscribe_channel" and self.tgAccount is not None:
-                    if not getConfig("auto_finish_tasks", False):
+                    if not getConfig("join_channels", False):
                         continue
 
                     channel_url = task.get("payload", {}).get("url")
