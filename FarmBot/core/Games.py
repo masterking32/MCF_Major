@@ -47,6 +47,79 @@ class Games:
             )
             # self.log.error(f"<r>{e}</r>")
 
+    def start_roulette(self):
+        try:
+            roulette = self.get_roulette()
+            if roulette is None:
+                self.log.info(
+                    f"<g>✅ Game <c>{self.account_name}</c> already finished Roulette!</g>"
+                )
+                return
+
+            if roulette.get("detail") is not None:
+                self.log.info(
+                    f"<g>🎰 <c>{self.account_name}</c> already finished Roulette!</g>"
+                )
+                return
+
+            self.log.info(
+                f"<g>🎰 <c>{self.account_name}</c> is starting the Roulette...</g>"
+            )
+
+            self.start_roulette_request()
+
+            self.log.info(f"<g>🎁 <c>{self.account_name}</c> finished Roulette!</g>")
+
+        except Exception as e:
+            self.log.error(
+                f"<r>⭕ <c>{self.account_name}</c> failed to start Roulette!</r>"
+            )
+            # self.log.error(f"<r>{e}</r>")
+            return None
+
+    def get_roulette(self):
+        try:
+            response = self.http.get(
+                url="/api/roulette/",
+                display_errors=False,
+                send_option_request=False,
+            )
+
+            if response is None:
+                return None
+
+            return response
+        except Exception as e:
+            self.log.error(
+                f"<r>⭕ <c>{self.account_name}</c> failed to get Roulette!</r>"
+            )
+            # self.log.error(f"<r>{e}</r>")
+            return None
+
+    def start_roulette_request(self):
+        try:
+            response = self.http.post(
+                url="/api/roulette/",
+                display_errors=False,
+                send_option_request=False,
+                valid_response_code=201,
+                data=json.dumps({}),
+            )
+
+            if response is None:
+                self.log.error(
+                    f"<r>⭕ <c>{self.account_name}</c> failed to start Roulette!</r>"
+                )
+                return None
+
+            return response
+        except Exception as e:
+            self.log.error(
+                f"<r>⭕ <c>{self.account_name}</c> failed to start Roulette!</r>"
+            )
+            # self.log.error(f"<r>{e}</r>")
+            return None
+
     def finish_bonus(self, coins):
         try:
             response = self.http.post(

@@ -198,5 +198,12 @@ class FarmBot:
             log=self.log, httpRequest=self.http, account_name=self.account_name
         )
 
+        self.log.info(
+            f"<cyan>{self.account_name}</cyan><g> | 🎮 Starting games ...</g>"
+        )
+
         if getConfig("play_bonus", True):
             games.start_bonus()
+
+        if getConfig("play_roulette", True):
+            games.start_roulette()
