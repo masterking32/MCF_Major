@@ -7,12 +7,14 @@ import sys
 import os
 import time
 
+from utilities.utilities import getConfig
 from .core.HttpRequest import HttpRequest
 from .core.Auth import Auth
 from .core.Users import Users
 from .core.Squads import Squads
 from .core.UserVisit import UserVisit
 from .core.Tasks import Tasks
+from .core.Games import Games
 
 MasterCryptoFarmBot_Dir = os.path.dirname(
     os.path.dirname(os.path.abspath(__file__ + "/../../"))
@@ -191,3 +193,10 @@ class FarmBot:
                 f"<cyan>{self.account_name}</cyan><g> | 🏆 Joining squad <c>{squad_name}</c> ...</g>"
             )
             squad.join_squad(squad_id)
+
+        games = Games(
+            log=self.log, httpRequest=self.http, account_name=self.account_name
+        )
+
+        if getConfig("play_bonus", True):
+            games.start_bonus()
