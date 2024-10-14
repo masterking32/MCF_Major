@@ -147,6 +147,7 @@ class Games:
                 f"<g>🎮 <c>{self.account_name}</c> is starting Durov game...</g>"
             )
 
+            time.sleep(random.randint(2, 5))
             self.start_durov_request(task_answer)
 
             self.log.info(f"<g>🎁 <c>{self.account_name}</c> finished Durov game!</g>")
@@ -339,7 +340,6 @@ class Games:
         }
 
         response = apiObj.get_task_answer(self.license_key, data)
-
         if "error" in response:
             if "license" in response["error"].lower():
                 self.log.error(f"<y>⭕ API Error: {response['error']}</y>")
@@ -347,7 +347,6 @@ class Games:
                 exit()
             return None
         elif "status" in response and response["status"] == "success":
-            self.tasks = response["tasks"]
             return response
         elif (
             "status" in response

@@ -189,8 +189,11 @@ class FarmBot:
                     )
                 elif is_allowed == False and self.tgAccount is not None:
                     if getConfig("join_channels", False):
-                        await self.tgAccount.joinChat("starsmajor")
-                        await time.sleep(5)
+                        try:
+                            await self.tgAccount.joinChat("starsmajor")
+                            await time.sleep(5)
+                        except Exception as e:
+                            pass
                     finish_task = tasks.check_task(15027)
                     if finish_task is not None:
                         self.log.info(

@@ -78,8 +78,7 @@ class Tasks:
                         f"<g>📃 <c>{self.account_name}</c> is starting <c>{task_name}</c>!</g>"
                     )
                     try:
-                        if self.tgAccount is not None:
-                            await self.tgAccount.joinChat(channel_url)
+                        await self.tgAccount.joinChat(channel_url)
                     except Exception as e:
                         pass
                     await asyncio.sleep(5)
