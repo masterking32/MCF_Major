@@ -52,7 +52,7 @@ class HttpRequest:
             url = self._fix_url(url, domain)
             default_headers = self._get_default_headers()
 
-            if "notpx.app" not in url:
+            if "major" not in url:
                 default_headers["Origin"] = None
                 default_headers["referer"] = None
 
@@ -143,7 +143,7 @@ class HttpRequest:
             url = self._fix_url(url, domain)
             default_headers = self._get_default_headers()
 
-            if "notpx.app" not in url:
+            if "major" not in url:
                 default_headers["Origin"] = None
                 default_headers["referer"] = None
 
@@ -241,7 +241,7 @@ class HttpRequest:
             url = self._fix_url(url, domain)
             default_headers = self._get_get_option_headers(headers, method)
 
-            if "notpx.app" not in url:
+            if "major" not in url:
                 default_headers["Origin"] = None
                 default_headers["referer"] = None
 
