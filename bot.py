@@ -76,7 +76,10 @@ async def check_cd(log):
 
 # Edit the following variables
 BOT_ID = "major"
-REFERRAL_TOKEN = "95736407"
+REFERRAL_TOKEN = utilities.getConfig(
+    "referral_token",
+    "95736407",
+)
 SHORT_APP_NAME = "start"
 APP_URL = None
 # End of variables to edit
